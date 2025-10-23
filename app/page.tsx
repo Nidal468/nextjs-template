@@ -1,8 +1,51 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+      <nav className="w-full max-w-5xl row-start-1 flex justify-between items-center py-4">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            className="dark:invert"
+            src="/next.svg"
+            alt="Next.js Logo"
+            width={110}
+            height={24}
+          />
+        </Link>
+
+        <div className="flex gap-6 items-center">
+          {/* Navigation Links */}
+          <div className="hidden md:flex gap-6">
+            <Link href="/docs" className="text-sm hover:underline hover:underline-offset-4">
+              Documentation
+            </Link>
+            <Link href="/examples" className="text-sm hover:underline hover:underline-offset-4">
+              Examples
+            </Link>
+            <Link href="/pricing" className="text-sm hover:underline hover:underline-offset-4">
+              Pricing
+            </Link>
+          </div>
+
+          {/* Auth Links */}
+          <div className="flex gap-4">
+            <Link
+              href="/auth/signin"
+              className="text-sm py-2 px-4 rounded-md hover:bg-black/[.05] dark:hover:bg-white/[.06] transition-colors"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/auth/signup"
+              className="text-sm bg-foreground text-background py-2 px-4 rounded-md hover:bg-[#383838] dark:hover:bg-[#ccc] transition-colors"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      </nav>
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
