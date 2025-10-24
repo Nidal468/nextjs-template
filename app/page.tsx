@@ -8,7 +8,7 @@ export default function Home() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             className="dark:invert"
-            src="/next.svgwww"
+            src="/next.svg"
             alt="Next.js Logo"
             width={110}
             height={24}
