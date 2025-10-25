@@ -8,9 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
+import { FaBookOpen, FaGoogle, FaGithub } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 // Validation schema
 const signUpSchema = z.object({
@@ -20,6 +21,21 @@ const signUpSchema = z.object({
 });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
 
 export default function SignUp() {
   const router = useRouter();
@@ -57,99 +73,120 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 pt-[80px]">
-      <div className="bg-black/5 backdrop-blur-lg border border-black/20 rounded-2xl shadow-xl p-8 w-full max-w-md text-center">
-        <div className="flex justify-center mb-4">
-          <Image
-            src="/next.svg"
-            width={48}
-            height={48}
-            alt="Logo"
-            className="rounded-full"
-          />
-        </div>
-
-        <h1 className="text-3xl font-extrabold mb-2">
-          Create your <span className="text-black">Account</span>
-        </h1>
-        <p className="text-gray-700 text-sm mb-6">
-          Join and explore premium features.
-        </p>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-left">
-          {/* Name */}
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="name" className="text-gray-800">Full Name</Label>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="name"
-                  type="text"
-                  placeholder="John Doe"
-                  className="bg-black/5 border border-black/20 text-black placeholder:text-gray-400 focus:ring-black focus:outline-none"
-                />
-              )}
-            />
-            {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#f8f9fa] to-[#e9ecef] p-4">
+      <motion.div 
+        initial="hidden"
+        animate="show"
+        variants={containerVariants}
+        className="w-full max-w-md"
+      >
+        <motion.div 
+          variants={itemVariants}
+          className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200"
+        >
+          <div className="bg-[#3a506b] p-6 flex items-center justify-center space-x-3">
+            <FaBookOpen className="text-white text-3xl" />
+            <h2 className="text-2xl font-bold text-white font-[Playfair Display]">FreeChapters</h2>
           </div>
 
-          {/* Email */}
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="email" className="text-gray-800">Email</Label>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  className="bg-black/5 border border-black/20 text-black placeholder:text-gray-400 focus:ring-black focus:outline-none"
+          <div className="p-8 space-y-6">
+            <motion.div variants={itemVariants}>
+              <h2 className="text-2xl font-bold text-gray-800 text-center font-[Playfair Display]">Create Your Account</h2>
+              <p className="text-gray-600 text-center text-sm mt-1 font-[Open Sans]">Join our community of book lovers</p>
+            </motion.div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <motion.div variants={itemVariants} className="space-y-1">
+                <Label htmlFor="name" className="text-gray-700 font-[Open Sans] font-medium">Full Name</Label>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="name"
+                      type="text"
+                      placeholder="John Doe"
+                      className="border-gray-300 focus:border-[#5bc0be] focus:ring-[#5bc0be]"
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
-          </div>
+                {errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}
+              </motion.div>
 
-          {/* Password */}
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="password" className="text-gray-800">Password</Label>
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  className="bg-black/5 border border-black/20 text-black placeholder:text-gray-400 focus:ring-black focus:outline-none"
+              <motion.div variants={itemVariants} className="space-y-1">
+                <Label htmlFor="email" className="text-gray-700 font-[Open Sans] font-medium">Email</Label>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      className="border-gray-300 focus:border-[#5bc0be] focus:ring-[#5bc0be]"
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+                {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="space-y-1">
+                <Label htmlFor="password" className="text-gray-700 font-[Open Sans] font-medium">Password</Label>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      className="border-gray-300 focus:border-[#5bc0be] focus:ring-[#5bc0be]"
+                    />
+                  )}
+                />
+                {errors.password && <p className="text-xs text-red-500">{errors.password.message}</p>}
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-[#3a506b] hover:bg-[#2c3e50] text-white font-medium py-2 px-4 rounded-md transition-colors duration-200"
+                >
+                  {loading ? "Creating Account..." : "Sign Up"}
+                </Button>
+              </motion.div>
+            </form>
+
+            <motion.div variants={itemVariants} className="relative flex items-center py-4">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-4 text-gray-500 text-sm font-[Open Sans]">OR</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="flex flex-col space-y-3">
+              <Button variant="outline" className="w-full flex items-center justify-center space-x-2 border-gray-300 hover:bg-gray-50">
+                <FaGoogle className="text-red-500" />
+                <span className="font-[Open Sans]">Sign up with Google</span>
+              </Button>
+              <Button variant="outline" className="w-full flex items-center justify-center space-x-2 border-gray-300 hover:bg-gray-50">
+                <FaGithub className="text-gray-800" />
+                <span className="font-[Open Sans]">Sign up with GitHub</span>
+              </Button>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="text-center text-sm text-gray-600 font-[Open Sans]">
+              Already have an account?{' '}
+              <a href="/auth/signin" className="text-[#5bc0be] hover:underline font-medium">
+                Sign in
+              </a>
+            </motion.div>
           </div>
-
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-4 bg-black text-white font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
-          >
-            {loading ? "Creating Account..." : "Sign Up"}
-          </Button>
-
-          <p className="text-center text-sm text-gray-600 mt-4">
-            Already have an account?{" "}
-            <a href="/auth/signin" className="text-black hover:underline">
-              Sign in
-            </a>
-          </p>
-        </form>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

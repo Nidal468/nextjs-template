@@ -4,6 +4,9 @@ import "./globals.css";
 import AuthProvider from "./api/auth/[...nextauth]/auth-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/auth-options";
+import Navbar from "@/components/nav";
+import Footer from "@/components/footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +35,10 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider session={session}>
+          <Navbar />
+          <Toaster richColors position="top-right" />
             {children}
+             <Footer />
         </AuthProvider>
 
       </body>
